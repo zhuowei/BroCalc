@@ -73,7 +73,23 @@ public class MainActivity extends Activity implements View.OnClickListener
 		Button button = initButton(id);
 		operatingButtonMap.put(button, op);
 	}
+
+	protected void onSaveInstanceState(Bundle icicle) {
+		icicle.putDouble("accumulator", accumulator);
+		icicle.putInt("currentOperation", currentOperation);
+		icicle.putBoolean("nextPressClears", nextPressClears);
+		icicle.putDouble("memory", memory);
+		super.onSaveInstanceState(icicle);
+	}
 	
+	protected void onRestoreInstanceState(Bundle icicle) {
+		accumulator = icicle.getDouble("accumulator", 0);
+		currentOperation = icicle.getInt("currentOperation", EQUALS);
+		nextPressClears = icicle.getBoolean("nextPressClears", nextPressClears);
+		memory = icicle.getDouble("memory", 0);
+		super.onRestoreInstanceState(icicle);
+	}
+
 	public void onClick(View v) {
 		String currentText = currentDisplay.getText().toString();
 
