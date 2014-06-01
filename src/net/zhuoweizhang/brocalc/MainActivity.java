@@ -29,6 +29,8 @@ public class MainActivity extends Activity implements View.OnClickListener
 	private boolean inverse = false;
 	private boolean nextPressClears = true;
 	private Map<Button, Integer> operatingButtonMap = new HashMap<Button, Integer>();
+	private double memory = 0;
+	private Button maddButton, msubtractButton, mrecallButton;
 
     /** Called when the activity is first created. */
     @Override
@@ -48,7 +50,9 @@ public class MainActivity extends Activity implements View.OnClickListener
 		addOpButton(DIVIDE, R.id.divide_button);
 		addOpButton(POWER, R.id.power_button);
 		addOpButton(EQUALS, R.id.equals_button);
-
+		maddButton = initButton(R.id.madd_button);
+		msubtractButton = initButton(R.id.msubtract_button);
+		mrecallButton = initButton(R.id.mrecall_button);
 	}
 	
 	private Button initButton(int id) {
@@ -95,7 +99,7 @@ public class MainActivity extends Activity implements View.OnClickListener
 				currentDisplay.setText("-" + currentText);
 			}
 		} else if (v == acButton) {
-			if (currentDisplay.length() == 0) accumulator = 0;
+			accumulator = 0;
 			currentDisplay.setText("");
 		} else if (operatingButtonMap.containsKey(v)) {
 			int operation = operatingButtonMap.get(v);
@@ -109,6 +113,12 @@ public class MainActivity extends Activity implements View.OnClickListener
 				currentOperation = operation;
 				inverse = false;
 			//}
+		} else if (v == maddButton) {
+			memory += Double.parseDouble(currentText);
+		} else if (v == msubtractButton) {
+			memory -= Double.parseDouble(currentText);
+		} else if (v == mrecallButton) {
+			currentDisplay.setText("" + memory);
 		}
 	}
 	
